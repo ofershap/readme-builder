@@ -1,0 +1,73 @@
+{
+  "name": "readme-builder",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Visual drag-and-drop README editor with live GitHub-flavored preview",
+  "author": "Ofer Shapira <2589702+ofershap@users.noreply.github.com>",
+  "license": "MIT",
+  "homepage": "https://ofershap.github.io/readme-builder",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ofershap/readme-builder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ofershap/readme-builder/issues"
+  },
+  "keywords": [
+    "readme",
+    "markdown",
+    "editor",
+    "builder",
+    "visual-editor",
+    "drag-and-drop",
+    "github",
+    "developer-tools",
+    "documentation"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@codemirror/lang-markdown": "^6.5.0",
+    "@codemirror/language": "^6.12.2",
+    "@codemirror/state": "^6.5.4",
+    "@codemirror/theme-one-dark": "^6.1.3",
+    "@codemirror/view": "^6.39.16",
+    "@dnd-kit/dom": "^0.3.2",
+    "@dnd-kit/helpers": "^0.3.2",
+    "@dnd-kit/react": "^0.3.2",
+    "codemirror": "^6.0.2",
+    "github-markdown-css": "^5.9.0",
+    "lucide-react": "^0.577.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-markdown": "^10.1.0",
+    "rehype-raw": "^7.0.0",
+    "remark-gfm": "^4.0.1",
+    "remark-github-blockquote-alert": "^2.0.1",
+    "remark-parse": "^11.0.0",
+    "unified": "^11.0.5",
+    "zundo": "^2.3.0",
+    "zustand": "^5.0.11"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@tailwindcss/vite": "^4.2.1",
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "globals": "^16.5.0",
+    "tailwindcss": "^4.2.1",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.48.0",
+    "vite": "^7.3.1"
+  }
+}

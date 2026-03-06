@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+.markdown-body p img {
+  display: inline !important;
+}
+
+.markdown-body p a {
+  display: inline !important;
+}
