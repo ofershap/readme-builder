@@ -21,8 +21,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 22
-          cache: npm
-      - run: npm i
+      - run: rm -f package-lock.json && npm install
       - run: npm run build
       - uses: actions/upload-pages-artifact@v4
         with:
