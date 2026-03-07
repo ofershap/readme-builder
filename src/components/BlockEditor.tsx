@@ -660,6 +660,30 @@ function socialBadgeUrl(link: SocialLink): string {
   return `https://img.shields.io/badge/${encodeURIComponent(link.platform)}-${encodeURIComponent(config.label)}-${config.color}?style=flat&logo=${encodeURIComponent(config.logo)}&logoColor=white`;
 }
 
+function GitShowCardPreview({ username }: { username: string }) {
+  const src = `https://gitshow.dev/api/card/${encodeURIComponent(username)}`;
+  const [broken, setBroken] = useState(false);
+  const prevSrc = useRef(src);
+
+  if (prevSrc.current !== src) {
+    prevSrc.current = src;
+    if (broken) setBroken(false);
+  }
+
+  return (
+    <a href={`https://gitshow.dev/${username}`} target="_blank" rel="noopener noreferrer" className="block mt-1.5">
+      {broken ? (
+        <div className="flex items-center gap-2 px-3 py-2 bg-gray-800 border border-gray-600 rounded text-sm text-gray-400">
+          <span>GitShow card for <strong className="text-gray-200">@{username}</strong></span>
+          <span className="text-xs text-yellow-500">(user not found)</span>
+        </div>
+      ) : (
+        <img src={src} alt={`Made by ${username}`} className="h-14" onError={() => setBroken(true)} />
+      )}
+    </a>
+  );
+}
+
 function GitShowEditor({ block }: { block: Block }) {
   const update = useStore(s => s.updateBlock);
   const p = block.props as GitShowProps;
@@ -671,23 +695,7 @@ function GitShowEditor({ block }: { block: Block }) {
       {p.username && (
         <div className="pt-2">
           <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Preview</span>
-          <a href={`https://gitshow.dev/${p.username}`} target="_blank" rel="noopener noreferrer" className="block mt-1.5">
-            <img
-              src={`https://gitshow.dev/api/card/${encodeURIComponent(p.username)}`}
-              alt={`Made by ${p.username}`}
-              className="h-14"
-              onError={e => {
-                const img = e.currentTarget;
-                img.style.display = 'none';
-                const fallback = img.parentElement?.querySelector('.gitshow-fallback');
-                if (fallback) (fallback as HTMLElement).style.display = 'flex';
-              }}
-            />
-            <div className="gitshow-fallback hidden items-center gap-2 px-3 py-2 bg-gray-800 border border-gray-600 rounded text-sm text-gray-400">
-              <span>GitShow card for <strong className="text-gray-200">@{p.username}</strong></span>
-              <span className="text-xs text-yellow-500">(user not found)</span>
-            </div>
-          </a>
+          <GitShowCardPreview username={p.username} />
         </div>
       )}
     </div>
