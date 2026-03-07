@@ -1,6 +1,6 @@
 import { useStore } from '../store';
 import { useTemporalStore } from '../hooks/useTemporalStore';
-import { Copy, Download, RotateCcw, Undo2, Redo2, FileText, Upload, FileCode2 } from 'lucide-react';
+import { Copy, Download, RotateCcw, Undo2, Redo2, FileText, Upload, FileCode2, Github } from 'lucide-react';
 import { useState } from 'react';
 import { TemplateModal } from './TemplateModal';
 import { ImportModal } from './ImportModal';
@@ -45,6 +45,15 @@ export function Toolbar() {
       <div className="flex items-center justify-between px-4 py-2 bg-gray-900 border-b border-gray-700 shrink-0">
         <div className="flex items-center gap-4">
           <span className="text-sm font-bold text-white tracking-tight">README Builder</span>
+          <a
+            href="https://github.com/ofershap/readme-builder"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-1.5 text-gray-400 hover:text-white rounded hover:bg-gray-800 transition-colors"
+            title="View on GitHub"
+          >
+            <Github size={15} />
+          </a>
           <div className="flex items-center gap-1.5 px-2 py-1 bg-gray-800/50 rounded">
             <FileCode2 size={13} className="text-gray-500" />
             {editingName ? (
