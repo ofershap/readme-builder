@@ -1,0 +1,44 @@
+# README Builder
+
+> Visual drag-and-drop editor for GitHub READMEs
+
+## What it does
+
+README Builder is a free, open-source web application that lets developers build GitHub-flavored READMEs using a visual block-based editor instead of writing raw markdown. Users drag blocks (headings, badges, code snippets, tables, images, alerts, etc.) into place, see a live GitHub-style preview, and export the result as a `.md` file.
+
+## Key features
+
+- 15+ block types: headings, badges, code, tables, lists, images, alerts, details/spoilers, blockquotes, columns, social links, GitShow card
+- Live GitHub-flavored preview with dark/light mode toggle
+- Drag-and-drop block reordering
+- Visual badge editor with shields.io integration
+- Import from raw markdown, local files, or any GitHub repository URL
+- 4 starter templates: Minimal Library, Full Project, CLI Tool, GitHub Profile
+- SEO-optimized template output with proper heading hierarchy and alt text
+- Undo/redo with full history
+- Auto-save to localStorage
+- Markdown source tab with CodeMirror syntax highlighting
+- Fully client-side, no backend, no auth, no tracking
+
+## Links
+
+- Live app: https://ofershap.github.io/readme-builder/
+- GitHub: https://github.com/ofershap/readme-builder
+- License: MIT
+
+## Tech stack
+
+React 19, TypeScript (strict), Tailwind CSS 4, Vite 7, Zustand + zundo, CodeMirror 6, @dnd-kit/react, react-markdown + remark-gfm + rehype-raw
+
+## Usage
+
+Open https://ofershap.github.io/readme-builder/ in any browser. No installation or account needed. Build your README visually, then click "Copy" or "Export" to get the markdown.
+
+## Self-hosting
+
+```
+git clone https://github.com/ofershap/readme-builder.git
+cd readme-builder
+npm install
+npm run dev
+```
