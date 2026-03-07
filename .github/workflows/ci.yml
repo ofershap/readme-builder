@@ -17,6 +17,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
-      - run: rm -f package-lock.json && npm install
+          cache: npm
+      - run: npm ci
       - run: npm run lint
       - run: npm run build

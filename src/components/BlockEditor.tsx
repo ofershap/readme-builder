@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
-import type { Block, HeadingProps, ParagraphProps, CodeProps, ImageProps, ListProps, TableProps, BlockquoteProps, AlertProps, RawProps, BadgesProps, DetailsProps, CenteredProps, ColumnsProps, ButtonRowProps, SpacerProps } from '../types';
+import type { Block, HeadingProps, ParagraphProps, CodeProps, ImageProps, ListProps, TableProps, BlockquoteProps, AlertProps, RawProps, BadgesProps, DetailsProps, CenteredProps, ColumnsProps, ButtonRowProps, SpacerProps, GitShowProps, SocialLinksProps, SocialLink } from '../types';
+import { SOCIAL_PLATFORMS } from '../blocks/markdown';
 import { useStore } from '../store';
 import { X } from 'lucide-react';
 
@@ -653,6 +654,123 @@ function SpacerEditor({ block }: { block: Block }) {
   );
 }
 
+function socialBadgeUrl(link: SocialLink): string {
+  const config = SOCIAL_PLATFORMS[link.platform];
+  if (!config) return '';
+  return `https://img.shields.io/badge/${encodeURIComponent(link.platform)}-${encodeURIComponent(config.label)}-${config.color}?style=flat&logo=${encodeURIComponent(config.logo)}&logoColor=white`;
+}
+
+function GitShowEditor({ block }: { block: Block }) {
+  const update = useStore(s => s.updateBlock);
+  const p = block.props as GitShowProps;
+  return (
+    <div className="space-y-3">
+      <Field label="GitHub username">
+        <input value={p.username} onChange={e => update(block.id, { username: e.target.value })} className={inputCls} placeholder="ofershap" />
+      </Field>
+      {p.username && (
+        <div className="pt-2">
+          <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Preview</span>
+          <a href={`https://gitshow.dev/${p.username}`} target="_blank" rel="noopener noreferrer" className="block mt-1.5">
+            <img src={`https://gitshow.dev/api/card/${encodeURIComponent(p.username)}`} alt={`Made by ${p.username}`} className="h-14" />
+          </a>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SocialLinksEditor({ block }: { block: Block }) {
+  const update = useStore(s => s.updateBlock);
+  const p = block.props as SocialLinksProps;
+  const platformKeys = Object.keys(SOCIAL_PLATFORMS);
+
+  const addLink = (platform?: string) => {
+    const plat = platform ?? platformKeys[0];
+    const config = SOCIAL_PLATFORMS[plat];
+    const handle = '';
+    const url = config ? config.urlTemplate.replace('{handle}', handle) : '';
+    update(block.id, { links: [...p.links, { platform: plat, handle, url }] });
+  };
+
+  const removeLink = (idx: number) => {
+    update(block.id, { links: p.links.filter((_, i) => i !== idx) });
+  };
+
+  const updateLink = (idx: number, changes: Partial<SocialLink>) => {
+    const links = p.links.map((link, i) => (i === idx ? { ...link, ...changes } : link));
+    if (changes.platform !== undefined) {
+      const config = SOCIAL_PLATFORMS[changes.platform];
+      if (config && links[idx]) {
+        links[idx] = { ...links[idx], url: config.urlTemplate.replace('{handle}', links[idx].handle) };
+      }
+    } else if (changes.handle !== undefined && links[idx]) {
+      const config = SOCIAL_PLATFORMS[links[idx].platform];
+      if (config) {
+        links[idx] = { ...links[idx], url: config.urlTemplate.replace('{handle}', changes.handle) };
+      }
+    }
+    update(block.id, { links });
+  };
+
+  const setLinkUrl = (idx: number, url: string) => {
+    const links = [...p.links];
+    links[idx] = { ...links[idx], url };
+    update(block.id, { links });
+  };
+
+  return (
+    <div className="space-y-3">
+      <Field label="Align">
+        <select value={p.align} onChange={e => update(block.id, { align: e.target.value as 'left' | 'center' | 'right' })} className={selectCls}>
+          <option value="left">Left</option>
+          <option value="center">Center</option>
+          <option value="right">Right</option>
+        </select>
+      </Field>
+      <div>
+        <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Quick add</span>
+        <div className="flex gap-1.5 flex-wrap mt-1">
+          {platformKeys.map(platform => (
+            <button key={platform} onClick={() => addLink(platform)} className="px-2.5 py-1 text-xs bg-gray-700 hover:bg-gray-600 rounded text-gray-300 cursor-pointer">
+              {platform}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="space-y-2">
+        {p.links.map((link, i) => (
+          <div key={i} className="p-3 border border-gray-700 rounded-lg space-y-2">
+            <div className="flex items-center justify-between">
+              {socialBadgeUrl(link) && (
+                <img src={socialBadgeUrl(link)} alt={link.platform} className="h-5" />
+              )}
+              <button onClick={() => removeLink(i)} className="text-gray-500 hover:text-red-400 cursor-pointer ml-auto"><X size={14} /></button>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <div>
+                <span className="text-[10px] text-gray-500">Platform</span>
+                <select value={link.platform} onChange={e => updateLink(i, { platform: e.target.value })} className={selectCls + ' w-full'}>
+                  {platformKeys.map(plat => <option key={plat} value={plat}>{plat}</option>)}
+                </select>
+              </div>
+              <div>
+                <span className="text-[10px] text-gray-500">Handle</span>
+                <input value={link.handle} onChange={e => updateLink(i, { handle: e.target.value })} className={inputCls} placeholder="username or URL" />
+              </div>
+            </div>
+            <div>
+              <span className="text-[10px] text-gray-500">URL</span>
+              <input value={link.url} onChange={e => setLinkUrl(i, e.target.value)} className={inputCls} placeholder="https://..." />
+            </div>
+          </div>
+        ))}
+      </div>
+      <button onClick={() => addLink()} className="text-xs text-blue-400 hover:text-blue-300 cursor-pointer">+ Add link</button>
+    </div>
+  );
+}
+
 const EDITORS: Record<string, React.ComponentType<{ block: Block }>> = {
   heading: HeadingEditor,
   paragraph: ParagraphEditor,
@@ -668,6 +786,8 @@ const EDITORS: Record<string, React.ComponentType<{ block: Block }>> = {
   columns: ColumnsEditor,
   buttonRow: ButtonRowEditor,
   spacer: SpacerEditor,
+  gitshow: GitShowEditor,
+  socialLinks: SocialLinksEditor,
   raw: RawEditor,
 };
 

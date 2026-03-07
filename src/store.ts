@@ -58,6 +58,12 @@ const DEFAULT_BLOCKS: Block[] = [
   { id: genId(), type: 'heading', props: { level: 2, text: 'Contributing' } },
   { id: genId(), type: 'paragraph', props: { text: 'Contributions are welcome! Please read the [contributing guide](CONTRIBUTING.md) before submitting a pull request.' } },
   { id: genId(), type: 'code', props: { language: 'bash', code: 'git clone https://github.com/user/my-awesome-project.git\ncd my-awesome-project\nnpm install\nnpm test' } },
+  { id: genId(), type: 'heading', props: { level: 2, text: 'Author' } },
+  { id: genId(), type: 'gitshow', props: { username: 'your-username' } },
+  { id: genId(), type: 'socialLinks', props: { links: [
+    { platform: 'LinkedIn', handle: 'your-username', url: 'https://linkedin.com/in/your-username' },
+    { platform: 'GitHub', handle: 'your-username', url: 'https://github.com/your-username' },
+  ], align: 'left' } },
   { id: genId(), type: 'heading', props: { level: 2, text: 'License' } },
   { id: genId(), type: 'paragraph', props: { text: 'MIT -- see [LICENSE](LICENSE) for details.' } },
 ];

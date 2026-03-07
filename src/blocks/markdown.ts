@@ -1,4 +1,21 @@
-import type { Block, HeadingProps, ParagraphProps, CodeProps, ImageProps, ListProps, TableProps, BlockquoteProps, AlertProps, RawProps, BadgesProps, BadgeConfig, DetailsProps, CenteredProps, ColumnsProps, ButtonRowProps, SpacerProps } from '../types';
+import type { Block, HeadingProps, ParagraphProps, CodeProps, ImageProps, ListProps, TableProps, BlockquoteProps, AlertProps, RawProps, BadgesProps, BadgeConfig, DetailsProps, CenteredProps, ColumnsProps, ButtonRowProps, SpacerProps, GitShowProps, SocialLinksProps, SocialLink } from '../types';
+
+export const SOCIAL_PLATFORMS: Record<string, { color: string; logo: string; label: string; urlTemplate: string }> = {
+  LinkedIn: { color: '0A66C2', logo: 'linkedin', label: 'Connect', urlTemplate: 'https://linkedin.com/in/{handle}' },
+  GitHub: { color: '181717', logo: 'github', label: 'Follow', urlTemplate: 'https://github.com/{handle}' },
+  'X/Twitter': { color: '000000', logo: 'x', label: 'Follow', urlTemplate: 'https://x.com/{handle}' },
+  YouTube: { color: 'FF0000', logo: 'youtube', label: 'Subscribe', urlTemplate: 'https://youtube.com/@{handle}' },
+  'Dev.to': { color: '0A0A0A', logo: 'devdotto', label: 'Blog', urlTemplate: 'https://dev.to/{handle}' },
+  Discord: { color: '5865F2', logo: 'discord', label: 'Join', urlTemplate: '{handle}' },
+  Email: { color: 'EA4335', logo: 'gmail', label: 'Email', urlTemplate: 'mailto:{handle}' },
+  Website: { color: '4285F4', logo: 'googlechrome', label: 'Visit', urlTemplate: '{handle}' },
+};
+
+function socialBadgeUrl(link: SocialLink): string {
+  const config = SOCIAL_PLATFORMS[link.platform];
+  if (!config) return '';
+  return `https://img.shields.io/badge/${encodeURIComponent(link.platform)}-${encodeURIComponent(config.label)}-${config.color}?style=flat&logo=${encodeURIComponent(config.logo)}&logoColor=white`;
+}
 
 function badgeImgUrl(badge: BadgeConfig): string {
   if (badge.preset) return badge.preset;
@@ -131,6 +148,33 @@ function blockToMarkdown(block: Block): string {
     case 'spacer': {
       const p = block.props as SpacerProps;
       return Array(p.lines).fill('<br>').join('\n');
+    }
+    case 'gitshow': {
+      const p = block.props as GitShowProps;
+      if (!p.username) return '';
+      return `[![Made by ${p.username}](https://gitshow.dev/api/card/${encodeURIComponent(p.username)})](https://gitshow.dev/${encodeURIComponent(p.username)})`;
+    }
+    case 'socialLinks': {
+      const p = block.props as SocialLinksProps;
+      if (!p.links.length) return '';
+      const badgeMarkdown = (link: SocialLink) => {
+        const imgUrl = socialBadgeUrl(link);
+        if (!imgUrl) return '';
+        const img = `![${link.platform}](${imgUrl})`;
+        return link.url ? `[${img}](${link.url})` : img;
+      };
+      if (p.align === 'center' || p.align === 'right') {
+        const htmlBadges = p.links
+          .filter(link => socialBadgeUrl(link))
+          .map(link => {
+            const imgUrl = socialBadgeUrl(link);
+            const img = `<img src="${imgUrl}" alt="${link.platform}">`;
+            return link.url ? `<a href="${link.url}">${img}</a>` : img;
+          })
+          .join(' ');
+        return `<p align="${p.align}">${htmlBadges}</p>`;
+      }
+      return p.links.filter(link => socialBadgeUrl(link)).map(badgeMarkdown).join(' ');
     }
     case 'raw': {
       const p = block.props as RawProps;

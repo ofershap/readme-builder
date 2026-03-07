@@ -26,6 +26,8 @@ function getBlockSummary(block: Block): string {
     case 'columns': return `${(p.columns as Array<unknown>)?.length || 0} columns`;
     case 'buttonRow': return `${(p.buttons as Array<unknown>)?.length || 0} buttons`;
     case 'spacer': return `${p.lines || 1} line break${(p.lines as number) > 1 ? 's' : ''}`;
+    case 'gitshow': return String(p.username || '') || '@username';
+    case 'socialLinks': return `${(p.links as Array<unknown>)?.length || 0} links`;
     case 'raw': return String(p.content || '').slice(0, 60) || 'Empty';
     default: return block.type;
   }

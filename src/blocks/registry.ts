@@ -92,6 +92,18 @@ export const BLOCK_DEFINITIONS: BlockDefinition[] = [
     defaultProps: { lines: 2 },
   },
   {
+    type: 'gitshow',
+    label: 'GitShow Card',
+    icon: 'CreditCard',
+    defaultProps: { username: 'ofershap' },
+  },
+  {
+    type: 'socialLinks',
+    label: 'Social Links',
+    icon: 'Share2',
+    defaultProps: { links: [], align: 'left' },
+  },
+  {
     type: 'raw',
     label: 'Raw Markdown',
     icon: 'FileText',

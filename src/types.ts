@@ -14,6 +14,8 @@ export type BlockType =
   | 'columns'
   | 'buttonRow'
   | 'spacer'
+  | 'gitshow'
+  | 'socialLinks'
   | 'raw';
 
 export interface HeadingProps {
@@ -103,6 +105,21 @@ export interface SpacerProps {
   lines: number;
 }
 
+export interface GitShowProps {
+  username: string;
+}
+
+export interface SocialLink {
+  platform: string;
+  handle: string;
+  url: string;
+}
+
+export interface SocialLinksProps {
+  links: SocialLink[];
+  align: 'left' | 'center' | 'right';
+}
+
 export type BlockProps =
   | HeadingProps
   | ParagraphProps
@@ -119,6 +136,8 @@ export type BlockProps =
   | ColumnsProps
   | ButtonRowProps
   | SpacerProps
+  | GitShowProps
+  | SocialLinksProps
   | RawProps;
 
 export interface Block {
