@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef } from 'react';
+import { useState, useMemo } from 'react';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
@@ -8,15 +8,8 @@ import 'github-markdown-css';
 import { useStore } from '../store';
 import { Sun, Moon } from 'lucide-react';
 
-function PreviewImg(props: React.ImgHTMLAttributes<HTMLImageElement>) {
+function ImgInner(props: React.ImgHTMLAttributes<HTMLImageElement>) {
   const [broken, setBroken] = useState(false);
-  const prevSrc = useRef(props.src);
-
-  if (prevSrc.current !== props.src) {
-    prevSrc.current = props.src;
-    if (broken) setBroken(false);
-  }
-
   if (broken) {
     return (
       <span style={{ display: 'inline-block', padding: '4px 10px', background: '#21262d', border: '1px solid #30363d', borderRadius: 6, fontSize: 12, color: '#8b949e' }}>
@@ -25,6 +18,10 @@ function PreviewImg(props: React.ImgHTMLAttributes<HTMLImageElement>) {
     );
   }
   return <img {...props} onError={() => setBroken(true)} />;
+}
+
+function PreviewImg(props: React.ImgHTMLAttributes<HTMLImageElement>) {
+  return <ImgInner key={props.src} {...props} />;
 }
 
 export function Preview() {

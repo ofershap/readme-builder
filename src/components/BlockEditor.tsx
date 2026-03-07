@@ -660,15 +660,9 @@ function socialBadgeUrl(link: SocialLink): string {
   return `https://img.shields.io/badge/${encodeURIComponent(link.platform)}-${encodeURIComponent(config.label)}-${config.color}?style=flat&logo=${encodeURIComponent(config.logo)}&logoColor=white`;
 }
 
-function GitShowCardPreview({ username }: { username: string }) {
+function GitShowCardInner({ username }: { username: string }) {
   const src = `https://gitshow.dev/api/card/${encodeURIComponent(username)}`;
   const [broken, setBroken] = useState(false);
-  const prevSrc = useRef(src);
-
-  if (prevSrc.current !== src) {
-    prevSrc.current = src;
-    if (broken) setBroken(false);
-  }
 
   return (
     <a href={`https://gitshow.dev/${username}`} target="_blank" rel="noopener noreferrer" className="block mt-1.5">
@@ -682,6 +676,10 @@ function GitShowCardPreview({ username }: { username: string }) {
       )}
     </a>
   );
+}
+
+function GitShowCardPreview({ username }: { username: string }) {
+  return <GitShowCardInner key={username} username={username} />;
 }
 
 function GitShowEditor({ block }: { block: Block }) {
