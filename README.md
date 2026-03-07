@@ -38,7 +38,7 @@ You just built something cool. Now you need a README, and suddenly you're juggli
 
 README Builder gives you a visual canvas where you drag blocks (headings, badges, code, tables, images, alerts) into place and see exactly how GitHub will render them. When it looks right, copy the markdown or export the file. Done.
 
-![Demo](assets/demo.gif)
+[![Demo](assets/demo.gif)](https://ofershap.github.io/readme-builder/)
 
 ## Features
 

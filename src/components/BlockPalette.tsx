@@ -9,7 +9,18 @@ const REPO_URL = 'https://github.com/ofershap/readme-builder';
 
 export function BlockPalette() {
   const addBlock = useStore(s => s.addBlock);
+  const blocks = useStore(s => s.blocks);
+  const selectedBlockId = useStore(s => s.selectedBlockId);
   const [expanded, setExpanded] = useState(false);
+
+  const handleAddBlock = (type: BlockType) => {
+    if (selectedBlockId) {
+      const idx = blocks.findIndex(b => b.id === selectedBlockId);
+      addBlock(type, idx + 1);
+    } else {
+      addBlock(type);
+    }
+  };
 
   return (
     <div className={`bg-gray-900 border-r border-gray-700 flex flex-col h-full shrink-0 transition-all duration-200 ${expanded ? 'w-48' : 'w-12'}`}>
@@ -29,7 +40,7 @@ export function BlockPalette() {
           return (
             <button
               key={def.type}
-              onClick={() => addBlock(def.type as BlockType)}
+              onClick={() => handleAddBlock(def.type as BlockType)}
               className={`w-full flex items-center rounded-md text-gray-400 hover:bg-gray-800 hover:text-white transition-colors cursor-pointer ${expanded ? 'gap-2.5 px-2.5 py-1.5 text-sm' : 'justify-center p-2'}`}
               title={expanded ? undefined : def.label}
             >

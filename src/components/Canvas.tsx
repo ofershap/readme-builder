@@ -34,7 +34,7 @@ function getBlockSummary(block: Block): string {
 }
 
 function SortableBlock({ block, index }: { block: Block; index: number }) {
-  const { ref, handleRef, isDragSource } = useSortable({ id: block.id, index });
+  const { ref, isDragSource } = useSortable({ id: block.id, index });
   const selectedBlockId = useStore(s => s.selectedBlockId);
   const selectBlock = useStore(s => s.selectBlock);
   const removeBlock = useStore(s => s.removeBlock);
@@ -46,16 +46,16 @@ function SortableBlock({ block, index }: { block: Block; index: number }) {
   return (
     <div
       ref={ref}
-      onClick={() => selectBlock(block.id)}
-      className={`group flex items-center gap-2 px-3 py-2.5 rounded-lg border transition-all cursor-pointer ${
+      onClick={() => selectBlock(isSelected ? null : block.id)}
+      className={`group flex items-center gap-2 px-3 py-2.5 rounded-lg border transition-all cursor-grab ${
         isDragSource ? 'opacity-50' : ''
       } ${
         isSelected
-          ? 'border-blue-500 bg-blue-500/10 ring-1 ring-blue-500/30'
+          ? 'border-gray-500 bg-gray-800/80'
           : 'border-gray-700 bg-gray-800/50 hover:border-gray-600'
       }`}
     >
-      <div ref={handleRef} className="cursor-grab text-gray-500 hover:text-gray-300">
+      <div className="text-gray-500 hover:text-gray-300">
         <GripVertical size={14} />
       </div>
       <div className="flex items-center gap-2 flex-1 min-w-0">
