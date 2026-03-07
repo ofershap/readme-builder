@@ -8,11 +8,24 @@ import 'github-markdown-css';
 import { useStore } from '../store';
 import { Sun, Moon } from 'lucide-react';
 
+function PreviewImg(props: React.ImgHTMLAttributes<HTMLImageElement>) {
+  const [broken, setBroken] = useState(false);
+  if (broken) {
+    return (
+      <span style={{ display: 'inline-block', padding: '4px 10px', background: '#21262d', border: '1px solid #30363d', borderRadius: 6, fontSize: 12, color: '#8b949e' }}>
+        {props.alt || 'Image not found'}
+      </span>
+    );
+  }
+  return <img {...props} onError={() => setBroken(true)} />;
+}
+
 export function Preview() {
   const [dark, setDark] = useState(true);
   const markdown = useStore(s => s.markdown);
   const plugins = useMemo(() => [remarkGfm, remarkAlert], []);
   const rehypePlugins = useMemo(() => [rehypeRaw], []);
+  const components = useMemo(() => ({ img: PreviewImg }), []);
 
   return (
     <div
@@ -34,7 +47,7 @@ export function Preview() {
       </div>
       <div className="flex-1 overflow-y-auto p-6">
         <div className="markdown-body" style={{ backgroundColor: 'transparent', maxWidth: '100%' }}>
-          <Markdown remarkPlugins={plugins} rehypePlugins={rehypePlugins}>
+          <Markdown remarkPlugins={plugins} rehypePlugins={rehypePlugins} components={components}>
             {markdown}
           </Markdown>
         </div>
