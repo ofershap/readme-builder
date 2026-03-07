@@ -1,9 +1,15 @@
 import { useStore } from '../store';
 import { useTemporalStore } from '../hooks/useTemporalStore';
-import { Copy, Download, RotateCcw, Undo2, Redo2, FileText, Upload, FileCode2, Github } from 'lucide-react';
+import { Copy, Download, RotateCcw, Undo2, Redo2, FileText, Upload, FileCode2, Github, BookOpen } from 'lucide-react';
 import { useState } from 'react';
 import { TemplateModal } from './TemplateModal';
 import { ImportModal } from './ImportModal';
+
+const ATTRIBUTION = '\n\n---\n\n<sub>Built with [README Builder](https://ofershap.github.io/readme-builder/) — visual drag-and-drop editor for GitHub READMEs</sub>\n';
+
+function withAttribution(md: string): string {
+  return md + ATTRIBUTION;
+}
 
 export function Toolbar() {
   const activeTab = useStore(s => s.activeTab);
@@ -20,13 +26,13 @@ export function Toolbar() {
   const [showResetConfirm, setShowResetConfirm] = useState(false);
 
   const copyMarkdown = async () => {
-    await navigator.clipboard.writeText(markdown);
+    await navigator.clipboard.writeText(withAttribution(markdown));
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   const downloadMarkdown = () => {
-    const blob = new Blob([markdown], { type: 'text/markdown' });
+    const blob = new Blob([withAttribution(markdown)], { type: 'text/markdown' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -53,6 +59,13 @@ export function Toolbar() {
             title="View on GitHub"
           >
             <Github size={15} />
+          </a>
+          <a
+            href="#guide"
+            className="p-1.5 text-gray-400 hover:text-white rounded hover:bg-gray-800 transition-colors"
+            title="README Best Practices Guide"
+          >
+            <BookOpen size={15} />
           </a>
           <div className="flex items-center gap-1.5 px-2 py-1 bg-gray-800/50 rounded">
             <FileCode2 size={13} className="text-gray-500" />

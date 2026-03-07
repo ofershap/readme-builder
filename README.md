@@ -51,6 +51,7 @@ README Builder gives you a visual canvas where you drag blocks (headings, badges
 | **Import** | Paste raw markdown, pick a file from your computer, or fetch any GitHub repo's README |
 | **Templates** | Start from "Minimal Library", "Full Project", "CLI Tool", or "GitHub Profile" templates |
 | **SEO & GEO optimized** | Templates follow best practices for search engines and AI assistants -- proper heading hierarchy, descriptive alt text, keyword-rich sections, FAQ blocks |
+| **[Best Practices Guide](https://ofershap.github.io/readme-builder/#guide)** | Built-in guide covering what makes a README that gets stars vs. one that gets ignored |
 | **Undo/Redo** | Full history with `Cmd+Z` / `Cmd+Shift+Z` |
 | **Auto-save** | Blocks persist in localStorage across sessions |
 | **Markdown tab** | Switch to raw markdown view with syntax highlighting (CodeMirror) |

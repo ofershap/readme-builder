@@ -1,12 +1,20 @@
-import { useEffect } from 'react';
+import { useEffect, useSyncExternalStore } from 'react';
 import { useStore } from './store';
 import { Toolbar } from './components/Toolbar';
 import { BlockPalette } from './components/BlockPalette';
 import { Canvas } from './components/Canvas';
 import { Preview } from './components/Preview';
 import { MarkdownTab } from './components/MarkdownTab';
+import { Guide } from './components/Guide';
 
-function App() {
+function useHash() {
+  return useSyncExternalStore(
+    (cb) => { window.addEventListener('hashchange', cb); return () => window.removeEventListener('hashchange', cb); },
+    () => window.location.hash,
+  );
+}
+
+function Editor() {
   const activeTab = useStore(s => s.activeTab);
 
   useEffect(() => {
@@ -32,7 +40,9 @@ function App() {
       }
       if (meta && e.key === 'c' && e.shiftKey) {
         e.preventDefault();
-        navigator.clipboard.writeText(useStore.getState().markdown);
+        const md = useStore.getState().markdown;
+        const attribution = '\n\n---\n\n<sub>Built with [README Builder](https://ofershap.github.io/readme-builder/) — visual drag-and-drop editor for GitHub READMEs</sub>\n';
+        navigator.clipboard.writeText(md + attribution);
       }
     };
     window.addEventListener('keydown', handler);
@@ -55,6 +65,13 @@ function App() {
       </div>
     </div>
   );
+}
+
+function App() {
+  const hash = useHash();
+
+  if (hash === '#guide') return <Guide />;
+  return <Editor />;
 }
 
 export default App;
