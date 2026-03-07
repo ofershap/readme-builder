@@ -34,7 +34,7 @@ const DEFAULT_BLOCKS: Block[] = [
     { id: 'b4', label: 'License', message: 'MIT', color: 'yellow', style: 'flat' as const },
   ], align: 'center' } },
   { id: genId(), type: 'paragraph', props: { text: '> **Zero dependencies** -- under 2KB gzipped. Works in Node.js 18+ and all modern browsers.' } },
-  { id: genId(), type: 'image', props: { url: 'https://via.placeholder.com/800x300/0d1117/58a6ff?text=Demo+Screenshot', alt: 'Demo', align: 'center', width: '600' } },
+  { id: genId(), type: 'image', props: { url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=300&fit=crop&crop=top', alt: 'Demo', align: 'center', width: '600' } },
   { id: genId(), type: 'heading', props: { level: 2, text: 'Features' } },
   { id: genId(), type: 'list', props: { style: 'unordered' as const, items: [
     { text: '**Blazing fast** -- optimized with zero allocations in hot paths' },

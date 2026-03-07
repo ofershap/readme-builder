@@ -48,7 +48,7 @@ const TEMPLATES: Template[] = [
         { id: id(), label: 'TypeScript', message: 'strict', color: 'blue', style: 'flat', logo: 'typescript' },
       ], align: 'center' } },
       { id: id(), type: 'spacer', props: { lines: 1 } },
-      { id: id(), type: 'image', props: { url: 'https://via.placeholder.com/800x400?text=Demo+Screenshot', alt: 'Demo', align: 'center', width: '600' } },
+      { id: id(), type: 'image', props: { url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=400&fit=crop&crop=top', alt: 'Demo', align: 'center', width: '600' } },
       { id: id(), type: 'spacer', props: { lines: 1 } },
       { id: id(), type: 'heading', props: { level: 2, text: 'Features' } },
       { id: id(), type: 'list', props: { style: 'unordered', items: [
