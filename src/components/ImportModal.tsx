@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
-import { X, Upload, Github, FileUp } from 'lucide-react';
+import { X, Upload, FileUp } from 'lucide-react';
+import { GithubIcon } from './GithubIcon';
 import { useStore } from '../store';
 import { parseMarkdownToBlocks } from '../blocks/parser';
 
@@ -110,7 +111,7 @@ export function ImportModal({ onClose }: { onClose: () => void }) {
               activeTab === 'github' ? 'text-white border-b-2 border-blue-500' : 'text-gray-400 hover:text-gray-200'
             }`}
           >
-            <Github size={16} />
+            <GithubIcon size={16} />
             GitHub
           </button>
         </div>
