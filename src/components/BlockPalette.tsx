@@ -3,7 +3,8 @@ import { useStore } from '../store';
 import { BLOCK_DEFINITIONS } from '../blocks/registry';
 import type { BlockType } from '../types';
 import * as Icons from 'lucide-react';
-import { PanelLeftOpen, PanelLeftClose, Github } from 'lucide-react';
+import { PanelLeftOpen, PanelLeftClose } from 'lucide-react';
+import { GithubIcon } from './GithubIcon';
 
 const REPO_URL = 'https://github.com/ofershap/readme-builder';
 
@@ -58,7 +59,7 @@ export function BlockPalette() {
           className={`flex items-center text-gray-500 hover:text-gray-300 transition-colors ${expanded ? 'gap-2 px-2 py-1.5' : 'p-1'}`}
           title="Star us on GitHub"
         >
-          <Github size={15} />
+          <GithubIcon size={15} />
           {expanded && <span className="text-xs text-gray-500 hover:text-gray-300">GitHub</span>}
         </a>
       </div>

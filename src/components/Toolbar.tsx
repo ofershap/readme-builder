@@ -1,6 +1,7 @@
 import { useStore } from '../store';
 import { useTemporalStore } from '../hooks/useTemporalStore';
-import { Copy, Download, RotateCcw, Undo2, Redo2, FileText, Upload, FileCode2, Github, BookOpen } from 'lucide-react';
+import { Copy, Download, RotateCcw, Undo2, Redo2, FileText, Upload, FileCode2, BookOpen } from 'lucide-react';
+import { GithubIcon } from './GithubIcon';
 import { useState } from 'react';
 import { TemplateModal } from './TemplateModal';
 import { ImportModal } from './ImportModal';
@@ -58,7 +59,7 @@ export function Toolbar() {
             className="p-1.5 text-gray-400 hover:text-white rounded hover:bg-gray-800 transition-colors"
             title="View on GitHub"
           >
-            <Github size={15} />
+            <GithubIcon size={15} />
           </a>
           <a
             href="#guide"
